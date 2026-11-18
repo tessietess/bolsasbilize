@@ -504,22 +504,33 @@ NOSSOS ACESSÓRIOS UPCYCLING
     </footer>
 
 function abrirEmail(assunto, mensagem) {
-
     const destinatario = 'bolsasbilize@gmail.com';
-
-    const linkGmail =
-        'googlegmail://co' +
-        '?to=' + encodeURIComponent(destinatario) +
+    const params =
+        'to=' + encodeURIComponent(destinatario) +
         '&subject=' + encodeURIComponent(assunto) +
         '&body=' + encodeURIComponent(mensagem);
 
-    const link = document.createElement('a');
-    link.href = linkGmail;
-    link.style.display = 'none';
+    const ehIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
 
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
+    if (ehIOS) {
+        // Tenta abrir o app Gmail
+        window.location.href = 'googlegmail:///co?' + params;
+
+        // Se o app não abriu (a página continua visível), usa o mailto
+        setTimeout(() => {
+            if (!document.hidden) {
+                window.location.href = 'mailto:' + destinatario + '?' +
+                    'subject=' + encodeURIComponent(assunto) +
+                    '&body=' + encodeURIComponent(mensagem);
+            }
+        }, 1200);
+    } else {
+        // Android/desktop: abre o Gmail na web
+        window.open(
+            'https://mail.google.com/mail/?view=cm&fs=1&' + params.replace('subject=', 'su='),
+            '_blank'
+        );
+    }
 }
 
     // BOTÕES PEDIR DAS BOLSAS
