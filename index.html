@@ -503,40 +503,40 @@ NOSSOS ACESSÓRIOS UPCYCLING
     <footer>
     </footer>
 
-    <!-- PEDIDOS E ORÇAMENTOS POR E-MAIL -->
-
-<script>
-
-   
 function abrirEmail(assunto, mensagem) {
 
     const destinatario = 'bolsasbilize@gmail.com';
 
-    const parametros =
-        '?subject=' + encodeURIComponent(assunto) +
-        '&body=' + encodeURIComponent(mensagem);
+    const assuntoCodificado = encodeURIComponent(assunto);
+    const mensagemCodificada = encodeURIComponent(mensagem);
 
-    // Verifica se o dispositivo é Android
     const ehAndroid = /Android/i.test(navigator.userAgent);
 
     if (ehAndroid) {
 
-        // Direciona a abertura para o aplicativo Gmail
-        const linkGmail =
-            'intent://' + destinatario +
-            parametros +
-            '#Intent;scheme=mailto;package=com.google.android.gm;end';
+        const gmailIntent =
+            'intent://compose?to=' +
+            encodeURIComponent(destinatario) +
+            '&subject=' + assuntoCodificado +
+            '&body=' + mensagemCodificada +
+            '#Intent;' +
+            'scheme=googlegmail;' +
+            'package=com.google.android.gm;' +
+            'end';
 
-        window.location.href = linkGmail;
+        window.location.href = gmailIntent;
 
     } else {
 
-        // Mantém o funcionamento atual nos computadores
         const linkEmail =
-            'mailto:' + destinatario + parametros;
+            'mailto:' + destinatario +
+            '?subject=' + assuntoCodificado +
+            '&body=' + mensagemCodificada;
 
         window.location.href = linkEmail;
     }
+}
+
 
     // BOTÕES PEDIR DAS BOLSAS
 
