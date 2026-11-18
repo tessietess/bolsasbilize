@@ -505,29 +505,24 @@ NOSSOS ACESSÓRIOS UPCYCLING
 
 function abrirEmail(assunto, mensagem) {
     const destinatario = 'bolsasbilize@gmail.com';
-    const params =
-        'to=' + encodeURIComponent(destinatario) +
-        '&subject=' + encodeURIComponent(assunto) +
-        '&body=' + encodeURIComponent(mensagem);
 
-    const ehIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+    const ehMobile =
+        /Android|iPhone|iPad|iPod/i.test(navigator.userAgent) ||
+        (navigator.maxTouchPoints > 1 && /Macintosh/i.test(navigator.userAgent)); // iPad moderno
 
-    if (ehIOS) {
-        // Tenta abrir o app Gmail
-        window.location.href = 'googlegmail:///co?' + params;
-
-        // Se o app não abriu (a página continua visível), usa o mailto
-        setTimeout(() => {
-            if (!document.hidden) {
-                window.location.href = 'mailto:' + destinatario + '?' +
-                    'subject=' + encodeURIComponent(assunto) +
-                    '&body=' + encodeURIComponent(mensagem);
-            }
-        }, 1200);
+    if (ehMobile) {
+        // Abre o app de e-mail do celular
+        window.location.href =
+            'mailto:' + destinatario +
+            '?subject=' + encodeURIComponent(assunto) +
+            '&body=' + encodeURIComponent(mensagem);
     } else {
-        // Android/desktop: abre o Gmail na web
+        // Desktop: Gmail na web (como já funcionava)
         window.open(
-            'https://mail.google.com/mail/?view=cm&fs=1&' + params.replace('subject=', 'su='),
+            'https://mail.google.com/mail/?view=cm&fs=1' +
+            '&to=' + encodeURIComponent(destinatario) +
+            '&su=' + encodeURIComponent(assunto) +
+            '&body=' + encodeURIComponent(mensagem),
             '_blank'
         );
     }
