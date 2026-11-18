@@ -502,9 +502,44 @@ NOSSOS ACESSÓRIOS UPCYCLING
 
     <footer>
     </footer>
-<!-- PEDIDOS POR E-MAIL -->
+
+    <!-- PEDIDOS E ORÇAMENTOS POR E-MAIL -->
 
 <script>
+
+   
+function abrirEmail(assunto, mensagem) {
+
+    const destinatario = 'bolsasbilize@gmail.com';
+
+    const parametros =
+        '?subject=' + encodeURIComponent(assunto) +
+        '&body=' + encodeURIComponent(mensagem);
+
+    // Verifica se o dispositivo é Android
+    const ehAndroid = /Android/i.test(navigator.userAgent);
+
+    if (ehAndroid) {
+
+        // Direciona a abertura para o aplicativo Gmail
+        const linkGmail =
+            'intent://' + destinatario +
+            parametros +
+            '#Intent;scheme=mailto;package=com.google.android.gm;end';
+
+        window.location.href = linkGmail;
+
+    } else {
+
+        // Mantém o funcionamento atual nos computadores
+        const linkEmail =
+            'mailto:' + destinatario + parametros;
+
+        window.location.href = linkEmail;
+    }
+
+    // BOTÕES PEDIR DAS BOLSAS
+
     document.querySelectorAll('.botao-pedir').forEach(function(botao) {
 
         botao.addEventListener('click', function(event) {
@@ -512,6 +547,8 @@ NOSSOS ACESSÓRIOS UPCYCLING
             event.preventDefault();
 
             const card = this.closest('.card-bolsa');
+
+            if (!card) return;
 
             const bolsa = card.dataset.bolsa || 'Bolsa selecionada';
             const valor = card.dataset.valor || 'A confirmar';
@@ -526,21 +563,15 @@ NOSSOS ACESSÓRIOS UPCYCLING
                 'Aguardo informações para finalizar a compra.\n\n' +
                 'Obrigada!';
 
-            const linkGmail =
-                'https://mail.google.com/mail/?view=cm&fs=1' +
-                '&to=bolsasbilize@gmail.com' +
-                '&su=' + encodeURIComponent(assunto) +
-                '&body=' + encodeURIComponent(mensagem);
+            abrirEmail(assunto, mensagem);
 
-            window.open(linkGmail, '_blank');
+        });
 
-
-       });
     });
-</script>
 
 
-<script>
+    // BOTÃO FAZER ORÇAMENTO
+
     document.querySelectorAll('.botao-orcamento').forEach(function(botao) {
 
         botao.addEventListener('click', function(event) {
@@ -563,21 +594,17 @@ NOSSOS ACESSÓRIOS UPCYCLING
                 'Aguardo o retorno com as possibilidades e o orçamento.\n\n' +
                 'Obrigada!';
 
-            const linkGmail =
-                'https://mail.google.com/mail/?view=cm&fs=1' +
-                '&to=bolsasbilize@gmail.com' +
-                '&su=' + encodeURIComponent(assunto) +
-                '&body=' + encodeURIComponent(mensagem);
-
-            window.open(linkGmail, '_blank');
+            abrirEmail(assunto, mensagem);
 
         });
 
     });
+
 </script>
 
 
-    <script src="script.js"></script>
+<script src="script.js"></script>
 
 </body>
 </html>
+
