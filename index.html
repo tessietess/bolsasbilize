@@ -502,36 +502,19 @@
 <!-- PEDIDOS E ORÇAMENTOS POR E-MAIL -->
 
 <script>
-(function () {
 
-    var DESTINATARIO = 'bolsasbilize@gmail.com';
+function abrirEmail(assunto, mensagem) {
 
-    function ehCelular() {
-        return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent) ||
-               (navigator.maxTouchPoints > 1 && /Macintosh/i.test(navigator.userAgent));
-    }
+    const destinatario = 'bolsasbilize@gmail.com';
 
-    function abrirEmail(assunto, mensagem) {
-        var assuntoEnc = encodeURIComponent(assunto);
-        var corpoEnc = encodeURIComponent(mensagem);
+    const linkGmail =
+        'https://mail.google.com/mail/?view=cm&fs=1' +
+        '&to=' + encodeURIComponent(destinatario) +
+        '&su=' + encodeURIComponent(assunto) +
+        '&body=' + encodeURIComponent(mensagem);
 
-        if (ehCelular()) {
-            // Celular: abre o app de e-mail do aparelho
-            window.location.href =
-                'mailto:' + DESTINATARIO +
-                '?subject=' + assuntoEnc +
-                '&body=' + corpoEnc;
-        } else {
-            // Computador: abre o Gmail na web
-            window.open(
-                'https://mail.google.com/mail/?view=cm&fs=1' +
-                '&to=' + encodeURIComponent(DESTINATARIO) +
-                '&su=' + assuntoEnc +
-                '&body=' + corpoEnc,
-                '_blank'
-            );
-        }
-    }
+    window.open(linkGmail, '_blank');
+}
 
     // BOTÕES PEDIR DAS BOLSAS
     document.querySelectorAll('.botao-pedir').forEach(function (botao) {
