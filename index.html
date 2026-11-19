@@ -587,18 +587,15 @@
 
 <script>
 
-
 function abrirEmail(assunto, mensagem) {
-
     const destinatario = 'bolsasbilize@gmail.com';
-
-    const linkGmail =
-        'https://mail.google.com/mail/?view=cm&fs=1' +
-        '&to=' + encodeURIComponent(destinatario) +
-        '&su=' + encodeURIComponent(assunto) +
+    
+    const linkEmail = 
+        'mailto:' + encodeURIComponent(destinatario) + 
+        '?subject=' + encodeURIComponent(assunto) + 
         '&body=' + encodeURIComponent(mensagem);
-
-    window.open(linkGmail, '_blank');
+    
+    window.location.href = linkEmail;
 }
 
 
