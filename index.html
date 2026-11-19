@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="pt-br">
 
 <head>
@@ -597,73 +597,75 @@ function abrirEmail(assunto, mensagem) {
         '&su=' + encodeURIComponent(assunto) +
         '&body=' + encodeURIComponent(mensagem);
 
-    window.open(linkGmail, '_blank');
+    window.location.href = linkGmail;
 }
 
 
-// BOTÕES PEDIR DAS BOLSAS
 
-document.querySelectorAll('.botao-pedir').forEach(function(botao) {
+    // BOTÕES PEDIR DAS BOLSAS
+    document.querySelectorAll('.botao-pedir').forEach(function (botao) {
 
-    botao.addEventListener('click', function(event) {
+        botao.addEventListener('click', function (event) {
 
-        event.preventDefault();
+            event.preventDefault();
 
-        const card = this.closest('.card-bolsa');
+            var card = this.closest('.card-bolsa');
+            if (!card) return;
 
-        if (!card) return;
+            // Lê nome e preço exatamente como aparecem no card
+            var titulo = card.querySelector('h4');
+            var preco = card.querySelector('.preco-bolsa');
 
-        const bolsa = card.dataset.bolsa || 'Bolsa selecionada';
-        const valor = card.dataset.valor || 'A confirmar';
+            var bolsa = (titulo ? titulo.textContent.trim() : '') || card.dataset.bolsa || 'Bolsa selecionada';
+            var valor = (preco ? preco.textContent.trim() : '') || card.dataset.valor || 'A confirmar';
 
-        const assunto = 'Pedido de bolsa - ' + bolsa;
+            var assunto = 'Pedido de bolsa - ' + bolsa;
 
-        const mensagem =
-            'Olá, BILIZE!\n\n' +
-            'Gostaria de fazer um pedido:\n\n' +
-            'Bolsa selecionada: ' + bolsa + '\n' +
-            'Valor: ' + valor + '\n\n' +
-            'Aguardo informações para finalizar a compra.\n\n' +
-            'Obrigada!';
+            var mensagem =
+                'Olá, BILIZE!\n\n' +
+                'Gostaria de fazer um pedido:\n\n' +
+                'Bolsa selecionada: ' + bolsa + '\n' +
+                'Valor: ' + valor + '\n\n' +
+                'Aguardo informações para finalizar a compra.\n\n' +
+                'Obrigada!';
 
-        abrirEmail(assunto, mensagem);
+            abrirEmail(assunto, mensagem);
 
-    });
-
-});
-
-
-// BOTÃO FAZER ORÇAMENTO
-
-document.querySelectorAll('.botao-orcamento').forEach(function(botao) {
-
-    botao.addEventListener('click', function(event) {
-
-        event.preventDefault();
-
-        const assunto = 'Orçamento - Transformação de peça';
-
-        const mensagem =
-            'Olá, BILIZE!\n\n' +
-            'Gostaria de solicitar um orçamento para transformar uma peça minha.\n\n' +
-            '1. DESCRIÇÃO DA PEÇA QUE TENHO:\n' +
-            'Tipo de peça:\n' +
-            'Material/tecido (se souber):\n' +
-            'Observações:\n\n' +
-            '2. O QUE GOSTARIA QUE ELA SE TORNASSE:\n' +
-            'Descreva sua ideia:\n\n' +
-            '3. IMAGENS PARA REFERÊNCIA:\n' +
-            'Anexarei uma foto da peça que tenho e uma imagem de referência do resultado que desejo.\n\n' +
-            'Aguardo o retorno com as possibilidades e o orçamento.\n\n' +
-            'Obrigada!';
-
-        abrirEmail(assunto, mensagem);
+        });
 
     });
 
-});
+    // BOTÃO FAZER ORÇAMENTO
+    document.querySelectorAll('.botao-orcamento').forEach(function (botao) {
+
+        botao.addEventListener('click', function (event) {
+
+            event.preventDefault();
+
+            var assunto = 'Orçamento - Transformação de peça';
+
+            var mensagem =
+                'Olá, BILIZE!\n\n' +
+                'Gostaria de solicitar um orçamento para transformar uma peça minha.\n\n' +
+                '1. DESCRIÇÃO DA PEÇA QUE TENHO:\n' +
+                'Tipo de peça:\n' +
+                'Material/tecido (se souber):\n' +
+                'Observações:\n\n' +
+                '2. O QUE GOSTARIA QUE ELA SE TORNASSE:\n' +
+                'Descreva sua ideia:\n\n' +
+                '3. IMAGENS PARA REFERÊNCIA:\n' +
+                'Anexarei uma foto da peça que tenho e uma imagem de referência do resultado que desejo.\n\n' +
+                'Aguardo o retorno com as possibilidades e o orçamento.\n\n' +
+                'Obrigada!';
+
+            abrirEmail(assunto, mensagem);
+
+        });
+
+    });
 
 </script>
+
 
 <script src="script.js"></script>
 
