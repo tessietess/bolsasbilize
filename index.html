@@ -588,19 +588,26 @@
 <script>
 
 function abrirEmail(assunto, mensagem) {
-
     const destinatario = 'bolsasbilize@gmail.com';
+    const assuntoEnc = encodeURIComponent(assunto);
+    const corpoEnc = encodeURIComponent(mensagem);
 
-    const linkGmail =
-        'https://mail.google.com/mail/?view=cm&fs=1' +
-        '&to=' + encodeURIComponent(destinatario) +
-        '&su=' + encodeURIComponent(assunto) +
-        '&body=' + encodeURIComponent(mensagem);
+    const ehCelular = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
-    window.location.href = linkGmail;
+    if (ehCelular) {
+        // Abre o app de e-mail do celular
+        window.location.href =
+            'mailto:' + destinatario + '?subject=' + assuntoEnc + '&body=' + corpoEnc;
+    } else {
+        // Computador: Gmail na web
+        window.open(
+            'https://mail.google.com/mail/?view=cm&fs=1' +
+            '&to=' + encodeURIComponent(destinatario) +
+            '&su=' + assuntoEnc + '&body=' + corpoEnc,
+            '_blank'
+        );
+    }
 }
-
-
 
     // BOTÕES PEDIR DAS BOLSAS
     document.querySelectorAll('.botao-pedir').forEach(function (botao) {
