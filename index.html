@@ -582,22 +582,25 @@
     <footer>
     </footer>
 
+     function abrirEmail(assunto, mensagem) {
 
-<!-- PEDIDOS E ORÇAMENTOS POR E-MAIL -->
+        const destinatario = 'bolsasbilize@gmail.com';
 
-<script>
+        const linkEmail =
+            'mailto:' + destinatario +
+            '?subject=' + encodeURIComponent(assunto) +
+            '&body=' + encodeURIComponent(mensagem);
 
-function abrirEmail(assunto, mensagem) {
-    const destinatario = 'bolsasbilize@gmail.com';
-    
-    const linkEmail = 
-        'mailto:' + encodeURIComponent(destinatario) + 
-        '?subject=' + encodeURIComponent(assunto) + 
-        '&body=' + encodeURIComponent(mensagem);
-    
-    window.location.href = linkEmail;
-}
+        const link = document.createElement('a');
 
+        link.href = linkEmail;
+        link.style.display = 'none';
+
+        document.body.appendChild(link);
+        link.click();
+
+        document.body.removeChild(link);
+    }
 
     // BOTÕES PEDIR DAS BOLSAS
     document.querySelectorAll('.botao-pedir').forEach(function (botao) {
