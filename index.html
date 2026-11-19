@@ -1,4 +1,4 @@
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-br">
 
 <head>
@@ -348,7 +348,7 @@
                     </div>
                 </div>
 
-                <div class="card-bolsa" data-bolsa="ECOBAG JEANS DESENHOS" data-valor="R$ 30,00">
+                <div class="card-bolsa" data-bolsa="ECOBAG JEANS DESENHOS" data-valor="R$ 45,00">
                     <img src="bolsa30.png" alt="Bolsa standard modelo 6">
 
                     <div class="info-bolsa">
@@ -408,7 +408,7 @@
                     </div>
                 </div>
 
-                <div class="card-bolsa" data-bolsa="BOLSA ESTRELAS AZUIS" data-valor="R$ 60,00">
+                <div class="card-bolsa" data-bolsa="BOLSA JEANS FLORIDA" data-valor="R$ 50,00">
                     <img src="bolsa15.jpg" alt="Bolsa premium modelo 3">
 
                     <div class="info-bolsa">
@@ -586,16 +586,27 @@
 <!-- PEDIDOS E ORÇAMENTOS POR E-MAIL -->
 
 <script>
+
 function abrirEmail(assunto, mensagem) {
     const destinatario = 'bolsasbilize@gmail.com';
+    const assuntoEnc = encodeURIComponent(assunto);
+    const corpoEnc = encodeURIComponent(mensagem);
 
-    const linkGmail =
-        'https://mail.google.com/mail/?view=cm&fs=1' +
-        '&to=' + encodeURIComponent(destinatario) +
-        '&su=' + encodeURIComponent(assunto) +
-        '&body=' + encodeURIComponent(mensagem);
+    const ehCelular = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
-    window.open(linkGmail, '_blank');
+    if (ehCelular) {
+        // Abre o app de e-mail do celular
+        window.location.href =
+            'mailto:' + destinatario + '?subject=' + assuntoEnc + '&body=' + corpoEnc;
+    } else {
+        // Computador: Gmail na web
+        window.open(
+            'https://mail.google.com/mail/?view=cm&fs=1' +
+            '&to=' + encodeURIComponent(destinatario) +
+            '&su=' + assuntoEnc + '&body=' + corpoEnc,
+            '_blank'
+        );
+    }
 }
 
     // BOTÕES PEDIR DAS BOLSAS
